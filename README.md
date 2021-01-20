@@ -1,6 +1,6 @@
 # jdshop
 
-A new Flutter application.
+给予flutter 开发的商场，
 
 ## Getting Started
 

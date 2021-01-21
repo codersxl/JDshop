@@ -21,6 +21,7 @@ class HomePages extends StatefulWidget {
 class HomePagesState extends State {
   List _focusData = [];
   List _hotlist = [];
+  List _bestProductList = [];
 
   //定义方法抽取swper组件
   Widget _swiperWidget() {
@@ -108,61 +109,77 @@ class HomePagesState extends State {
 
 //推荐
 
-  //推荐商品
-  _recProductItemWidget() {
-    var itemWidth = (ScreenUtils.getScreenWidth() - 30) / 2;
+  //热门商品
 
+  //推荐商品
+  Widget _recProductListWidget() {
+
+    var itemWidth = (ScreenUtils.getScreenWidth() - 30) / 2;
     return Container(
       padding: EdgeInsets.all(10),
-      width: itemWidth,
-      decoration: BoxDecoration(
-          border:
-              Border.all(color: Color.fromRGBO(233, 233, 233, 0.9), width: 1)),
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            child: AspectRatio(
-              //防止服务器返回的图片大小不一致导致高度不一致问题
-              aspectRatio: 1 / 1,
-              child: Image.network(
-                "https://www.itying.com/images/flutter/list1.jpg",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: ScreenUtils.height(20)),
-            child: Text(
-              "2019夏季新款气质高贵洋气阔太太有女人味中长款宽松大码",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.black54),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: ScreenUtils.height(20)),
-            child: Stack(
+      child: Wrap(
+        runSpacing: 10,
+        spacing: 10,
+        children: this._bestProductList.map((value) {
+
+          //图片
+          String sPic=value.sPic;
+          sPic=Config.domain+sPic.replaceAll('\\', '/');
+
+          return Container(
+            padding: EdgeInsets.all(10),
+            width: itemWidth,
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: Color.fromRGBO(233, 233, 233, 0.9), width: 1)),
+            child: Column(
               children: <Widget>[
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "¥188.0",
-                    style: TextStyle(color: Colors.red, fontSize: 16),
+                Container(
+                  width: double.infinity,
+                  child: AspectRatio(
+                    //防止服务器返回的图片大小不一致导致高度不一致问题
+                    aspectRatio: 1 / 1,
+                    child: Image.network(
+                      "${sPic}",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("¥198.0",
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 14,
-                          decoration: TextDecoration.lineThrough)),
+                Padding(
+                  padding: EdgeInsets.only(top: ScreenUtils.height(20)),
+                  child: Text(
+                    "${value.title}",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: ScreenUtils.height(20)),
+                  child: Stack(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "¥${value.price}",
+                          style: TextStyle(color: Colors.red, fontSize: 16),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text( "¥${value.oldPrice}",
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 14,
+                                decoration: TextDecoration.lineThrough)),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
-          )
-        ],
+          );
+        }).toList(),
       ),
     );
   }
@@ -184,11 +201,23 @@ class HomePagesState extends State {
     var api = '${Config.domain}api/plist?is_hot=1';
 
     var res = await Dio().get(api);
-    LogUtils.d("aaa", res);
+
     var hotdata = ProducModel.fromJson(res.data);
 
     setState(() {
       this._hotlist = hotdata.result;
+    });
+  }
+
+  //获取热门数据
+  _getHot() async {
+    var api = '${Config.domain}api/plist?iis_best=1';
+    var res = await Dio().get(api);
+    LogUtils.d("aaa", res);
+    var hotdata = ProducModel.fromJson(res.data);
+    setState(() {
+      this._bestProductList = hotdata.result;
+
     });
   }
 
@@ -198,6 +227,7 @@ class HomePagesState extends State {
     super.initState();
     this._getFocus();
     this._getCai();
+    this._getHot();
   }
 
   @override
@@ -222,21 +252,7 @@ class HomePagesState extends State {
           height: ScreenUtils.height(10),
         ),
         _titileWidget("热门推荐"),
-        Container(
-          padding: EdgeInsets.all(10),
-          child: Wrap(
-            runSpacing: 10,
-            spacing: 10,
-            children: <Widget>[
-              _recProductItemWidget(),
-              _recProductItemWidget(),
-              _recProductItemWidget(),
-              _recProductItemWidget(),
-              _recProductItemWidget(),
-              _recProductItemWidget()
-            ],
-          ),
-        )
+        _recProductListWidget()
       ],
     );
   }

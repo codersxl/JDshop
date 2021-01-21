@@ -19,7 +19,7 @@ class MainTabs extends StatefulWidget {
 class MainTabsState extends State {
   //设置当前的index
   // ignore: non_constant_identifier_names
-  int CurrntIndex = 0;
+  int CurrntIndex = 1;
   var list = [
     HomePages(),
     CategrPages(),

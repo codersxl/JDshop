@@ -142,7 +142,7 @@ class HomePagesState extends State {
                     //防止服务器返回的图片大小不一致导致高度不一致问题
                     aspectRatio: 1 / 1,
                     child: Image.network(
-                      "${sPic}",
+                      "$sPic",
                       fit: BoxFit.cover,
                     ),
                   ),

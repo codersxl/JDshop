@@ -5,6 +5,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:jdshop/config/Config.dart';
 import 'package:jdshop/model/FocusModel.dart';
 import 'package:jdshop/model/ProducModel.dart';
+import 'package:jdshop/model/ProducHotModel.dart';
 import 'package:jdshop/utils/LogUtils.dart';
 import 'package:jdshop/utils/ScreenUtils.dart';
 
@@ -125,6 +126,7 @@ class HomePagesState extends State {
           //图片
           String sPic=value.sPic;
           sPic=Config.domain+sPic.replaceAll('\\', '/');
+          LogUtils.e("aaa", sPic);
 
           return Container(
             padding: EdgeInsets.all(10),
@@ -209,14 +211,13 @@ class HomePagesState extends State {
     });
   }
 
-  //获取热门数据
-  _getHot() async {
-    var api = '${Config.domain}api/plist?iis_best=1';
-    var res = await Dio().get(api);
-    LogUtils.d("aaa", res);
-    var hotdata = ProducModel.fromJson(res.data);
+  //获取热门推荐的数据
+  _getBestProductData() async {
+    var api = '${Config.domain}api/plist?is_best=1';
+    var result = await Dio().get(api);
+     var bestProductList =ProducHotModel.fromJson(result.data);
     setState(() {
-      this._bestProductList = hotdata.result;
+      this._bestProductList = bestProductList.result;
 
     });
   }
@@ -227,7 +228,7 @@ class HomePagesState extends State {
     super.initState();
     this._getFocus();
     this._getCai();
-    this._getHot();
+    this._getBestProductData();
   }
 
   @override

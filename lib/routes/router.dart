@@ -6,7 +6,7 @@ import 'package:jdshop/tab/MainTabs.dart';
 
 //配置路由
 final routes = {
-  '/': (context) =>SplashPages(),
+  '/': (context) =>MainTabs(),
   '/search': (context) => SearchPage(),
   '/SplashPages':(context)=>SplashPages()
 };

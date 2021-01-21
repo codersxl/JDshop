@@ -16,6 +16,11 @@ class HomePagesState extends State {
 
   @override
   Widget build(BuildContext context) {
-    return Text("home");
+    return RaisedButton(
+      child: Text("tio"),
+      onPressed: (){
+        Navigator.pushNamed(context, '/search');
+      },
+    );
   }
 }

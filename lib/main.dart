@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:jdshop/routes/router.dart';
 import 'tab/MainTabs.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -7,26 +9,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'shop',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
+      onGenerateRoute: onGenerateRoute,
+      initialRoute: '/',
     );
   }
 }
+
 /// 对Tbs进行抽取
 
 class MyHomePage extends StatefulWidget {
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
-    return  MainTabs();
+    return MainTabs();
   }
 }

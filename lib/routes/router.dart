@@ -12,6 +12,7 @@ final routes = {
 };
 
 //固定写法
+// ignore: missing_return, top_level_function_literal_block
 var onGenerateRoute = (RouteSettings settings) {
 // 统一处理
   final String name = settings.name;

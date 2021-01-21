@@ -1,9 +1,9 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/**
- * 适配工具类
- *
- */
+/// 适配工具类
+
+///
+
 class ScreenUtils {
   static init(context){
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);

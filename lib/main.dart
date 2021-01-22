@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(),
       onGenerateRoute: onGenerateRoute,
-      initialRoute: '/',
+      initialRoute: '/ProductList',
     );
   }
 }

@@ -1,14 +1,18 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:jdshop/pages/SearchPage.dart';
 import 'package:jdshop/pages/SplashPages.dart';
 import 'package:jdshop/tab/MainTabs.dart';
+import 'package:jdshop/ui/ProductList.dart';
 
 
 //配置路由
 final routes = {
   '/': (context) =>MainTabs(),
   '/search': (context) => SearchPage(),
-  '/SplashPages':(context)=>SplashPages()
+  '/SplashPages':(context)=>SplashPages(),
+  '/ProductList':(context,{arguments})=>ProductList(arguments:arguments),
 };
 
 //固定写法

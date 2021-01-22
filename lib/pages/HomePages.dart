@@ -19,7 +19,7 @@ class HomePages extends StatefulWidget {
   }
 }
 
-class HomePagesState extends State {
+class HomePagesState extends State with AutomaticKeepAliveClientMixin {
   List _focusData = [];
   List _hotlist = [];
   List _bestProductList = [];
@@ -257,4 +257,8 @@ class HomePagesState extends State {
       ],
     );
   }
+
+  @override
+  // 保持页面状态 数据不重新加载
+  bool get wantKeepAlive => true;
 }

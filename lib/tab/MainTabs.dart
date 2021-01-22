@@ -17,10 +17,11 @@ class MainTabs extends StatefulWidget {
 }
 
 class MainTabsState extends State {
+  var _pageController;
   //设置当前的index
   // ignore: non_constant_identifier_names
-  int CurrntIndex = 1;
-  var list = [
+  int CurrntIndex = 0;
+  List<Widget> listpages = [
     HomePages(),
     CategrPages(),
     FindPages(),
@@ -31,7 +32,9 @@ class MainTabsState extends State {
   @override
   void initState() {
     // TODO: implement initState
+    _pageController = new PageController(initialPage : CurrntIndex);
     super.initState();
+
   }
 
   @override
@@ -41,7 +44,18 @@ class MainTabsState extends State {
         title: Text("shop"),
       ),
       //BODY
-      body: this.list[CurrntIndex],
+      body: PageView(
+        controller: _pageController,
+        children:
+        this.listpages
+        ,
+        onPageChanged: (index){
+          setState(() {
+            this.CurrntIndex=index;
+          });
+
+        },
+      ),
 
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -49,6 +63,8 @@ class MainTabsState extends State {
         onTap: (index) {
           setState(() {
             this.CurrntIndex = index;
+            print("aa${this.CurrntIndex}");
+            _pageController.jumpToPage(index);
           });
         },
         items: [

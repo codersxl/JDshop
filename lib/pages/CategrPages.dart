@@ -15,7 +15,7 @@ class CategrPages extends StatefulWidget {
   }
 }
 
-class CategrPagesState extends State {
+class CategrPagesState extends State with AutomaticKeepAliveClientMixin{
   @override
   void initState() {
     // TODO: implement initState
@@ -176,4 +176,8 @@ class CategrPagesState extends State {
       ],
     );
   }
+
+  @override
+  // 保持页面数据Ubuntu重新请求
+  bool get wantKeepAlive => true;
 }

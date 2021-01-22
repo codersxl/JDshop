@@ -97,21 +97,28 @@ class CategrPagesState extends State with AutomaticKeepAliveClientMixin{
               itemBuilder: (BuildContext context, int index) {
                 String pic = this._rightData[index].pic;
                 pic = Config.domain + pic.replaceAll("\\", "/");
-                return Container(
-                  child: Column(
-                    children: <Widget>[
-                      AspectRatio(
-                        aspectRatio: 1 / 1,
-                        child: Image.network(
-                          pic,
-                          fit: BoxFit.fill,
+                return InkWell(
+                  onTap: (){
+                    Navigator.pushNamed(context, '/ProductList',arguments: {
+                      "cid":this._rightData[index].sId
+                    });
+                  },
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        AspectRatio(
+                          aspectRatio: 1 / 1,
+                          child: Image.network(
+                            pic,
+                            fit: BoxFit.fill,
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: ScreenUtils.height(28),
-                        child: Text("${this._rightData[index].title}"),
-                      )
-                    ],
+                        Container(
+                          height: ScreenUtils.height(28),
+                          child: Text("${this._rightData[index].title}"),
+                        )
+                      ],
+                    ),
                   ),
                 );
               }),

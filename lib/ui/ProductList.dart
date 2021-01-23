@@ -1,5 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jdshop/config/Config.dart';
+import 'package:jdshop/model/ProducModel.dart';
+import 'package:jdshop/model/ProductListModel.dart';
+import 'package:jdshop/utils/LoadingWidget.dart';
 import 'package:jdshop/utils/ScreenUtils.dart';
 
 class ProductList extends StatefulWidget {
@@ -15,6 +20,30 @@ class ProductList extends StatefulWidget {
 }
 
 class ProductListState extends State<ProductList> {
+
+  //用于上拉分页
+  ScrollController _scrollController = ScrollController(); //listview 的控制器
+
+  //分页
+  int _page = 1;
+
+  //每页有多少条数据
+  int _pageSize=8;
+
+  //数据
+  List _productList = [];
+  /*
+  排序:价格升序 sort=price_1 价格降序 sort=price_-1  销量升序 sort=salecount_1 销量降序 sort=salecount_-1
+  */
+  String _sort = "";
+
+  //解决重复请求的问题
+  bool flag=true;
+
+  //是否有数据
+
+  bool _hasMore=true;
+
   //定义事件 打开抽屉
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Widget _getListView(){
@@ -22,82 +51,88 @@ class ProductListState extends State<ProductList> {
     //   padding: EdgeInsets.all(10),
     //   child: ,
     // );
+     if(this._productList.length>0){
+       return Container(
+         padding: EdgeInsets.only(top: ScreenUtils.height(10)),
+         margin: EdgeInsets.only(top: ScreenUtils.height(80)),
+         child: ListView.builder(
+           itemBuilder: (context, index) {
+             String pic=this._productList[index].pic;
+             pic=Config.domain+pic.replaceAll('\\', '/');
+             //每一个元素
+             return Column(
+               children: <Widget>[
+                 Row(
+                   children: <Widget>[
+                     Container(
+                       width: ScreenUtils.width(180),
+                       height: ScreenUtils.height(180),
+                       child: Image.network(
+                           pic,
+                           fit: BoxFit.cover),
+                     ),
+                     Expanded(
+                       flex: 1,
+                       child: Container(
+                         height: ScreenUtils.height(180),
+                         margin: EdgeInsets.only(left: 10),
+                         // color: Colors.red,
+                         child: Column(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: <Widget>[
+                             Text(
+                                 "${this._productList[index].title}",
+                                 maxLines: 2,
+                                 overflow: TextOverflow.ellipsis),
+                             Row(
+                               children: <Widget>[
+                                 Container(
+                                   height: ScreenUtils.height(36),
+                                   margin: EdgeInsets.only(right: 10),
+                                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
 
-    return Container(
-      padding: EdgeInsets.only(top: ScreenUtils.height(10)),
-      margin: EdgeInsets.only(top: ScreenUtils.height(80)),
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          //每一个元素
-          return Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: ScreenUtils.width(180),
-                    height: ScreenUtils.height(180),
-                    child: Image.network(
-                        "https://www.itying.com/images/flutter/list2.jpg",
-                        fit: BoxFit.cover),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      height: ScreenUtils.height(180),
-                      margin: EdgeInsets.only(left: 10),
-                      // color: Colors.red,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                              "戴尔(DELL)灵越3670 英特尔酷睿i5 高性能 台式电脑整机(九代i5-9400 8G 256G)",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                height: ScreenUtils.height(36),
-                                margin: EdgeInsets.only(right: 10),
-                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                   //注意 如果Container里面加上decoration属性，这个时候color属性必须得放在BoxDecoration
+                                   decoration: BoxDecoration(
+                                     borderRadius: BorderRadius.circular(10),
+                                     color: Color.fromRGBO(230, 230, 230, 0.9),
+                                   ),
 
-                                //注意 如果Container里面加上decoration属性，这个时候color属性必须得放在BoxDecoration
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Color.fromRGBO(230, 230, 230, 0.9),
-                                ),
+                                   child: Text("4g"),
+                                 ),
+                                 Container(
+                                   height: ScreenUtils.height(36),
+                                   margin: EdgeInsets.only(right: 10),
+                                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                   decoration: BoxDecoration(
+                                     borderRadius: BorderRadius.circular(10),
+                                     color: Color.fromRGBO(230, 230, 230, 0.9),
+                                   ),
+                                   child: Text("126"),
+                                 ),
+                               ],
+                             ),
+                             Text(
+                               "¥${this._productList[index].price}",
+                               style: TextStyle(color: Colors.red, fontSize: 16),
+                             )
+                           ],
+                         ),
+                       ),
+                     )
+                   ],
+                 ),
+                 Divider(height: 20)
+               ],
+             );
+           },
+           itemCount: this._productList.length,
+         ),
+       );
+     }else{
+       return LoadingWidget();
+     }
 
-                                child: Text("4g"),
-                              ),
-                              Container(
-                                height: ScreenUtils.height(36),
-                                margin: EdgeInsets.only(right: 10),
-                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Color.fromRGBO(230, 230, 230, 0.9),
-                                ),
-                                child: Text("126"),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            "¥990",
-                            style: TextStyle(color: Colors.red, fontSize: 16),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Divider(height: 20)
-            ],
-          );
-        },
-        itemCount: 10,
-      ),
-    );
   }
 
  //
@@ -173,6 +208,28 @@ class ProductListState extends State<ProductList> {
       ) ,
     );
   }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getData();
+  }
+
+  //请求数据
+  _getData() async{
+
+    var api ='${Config.domain}api/plist?cid=${widget.arguments["cid"]}&page=${this._page}&sort=${this._sort}&pageSize=${this._pageSize}';
+
+       var res= await Dio().get(api);
+         var producModel = ProductListModel.fromJson(res.data);
+         setState(() {
+              this._productList.addAll(producModel.result);
+              print("aaa${this._productList.toString()}");
+         });
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtils.init(context);

@@ -21,4 +21,8 @@ class ScreenUtils {
     return ScreenUtil.screenWidthDp;
   }
 
+  static size(double value){
+    return ScreenUtil.getInstance().setSp(value);
+  }
+
 }

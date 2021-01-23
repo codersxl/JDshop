@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'shop',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.white
       ),
       home: MyHomePage(),
       onGenerateRoute: onGenerateRoute,

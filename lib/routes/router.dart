@@ -10,7 +10,7 @@ import 'package:jdshop/ui/ProductList.dart';
 //配置路由
 final routes = {
   '/': (context) =>MainTabs(),
-  '/search': (context) => SearchPage(),
+  '/SearchPage': (context) => SearchPage(),
   '/SplashPages':(context)=>SplashPages(),
   '/ProductList':(context,{arguments})=>ProductList(arguments:arguments),
 };

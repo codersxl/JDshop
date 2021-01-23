@@ -40,43 +40,40 @@ class MainTabsState extends State {
   Widget build(BuildContext context) {
     ScreenUtils.init(context);
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //     icon: Icon(Icons.center_focus_weak),
-      //     onPressed: null,
-      //   ),
-      //   title: InkWell(
-      //     onTap: (){
-      //       Navigator.pushNamed(context, '/SearchPage');
-      //       print("======================");
-      //     },
-      //     child: Container(
-      //       height: ScreenUtils.height(72),
-      //       padding: EdgeInsets.only(left: 10),
-      //       decoration: BoxDecoration(
-      //         color: Color.fromRGBO(233, 233, 233, 0.9),
-      //         borderRadius: BorderRadius.circular(30),
-      //
-      //       ),
-      //       child: Row(
-      //         children: <Widget>[
-      //           Icon(Icons.search),
-      //           Text("笔记本")
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      //   actions: <Widget>[
-      //     IconButton(
-      //       icon: Icon(Icons.message),
-      //       onPressed: null,
-      //     ),
-      //   ],
-      // ),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.center_focus_weak),
+          onPressed: null,
+        ),
+        title: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, '/SearchPage');
+            print("======================");
+          },
+          child: Container(
+            height: ScreenUtils.height(72),
+            padding: EdgeInsets.only(left: 10),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(233, 233, 233, 0.9),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              children: <Widget>[Icon(Icons.search), Text("笔记本")],
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.message),
+            onPressed: null,
+          ),
+        ],
+      ),
       //BODY
       body: PageView(
         controller: _pageController,
         children: this.listpages,
+        physics: new NeverScrollableScrollPhysics(), //精致PageView左右滑动
         onPageChanged: (index) {
           setState(() {
             this.CurrntIndex = index;

@@ -29,10 +29,11 @@ class SearchPage extends StatelessWidget {
           child: TextField(
             autofocus: true,
             decoration: InputDecoration(
+                icon: Icon(Icons.search),
                 border: OutlineInputBorder(
-              borderSide: BorderSide.none, //去除底线
-              borderRadius: BorderRadius.circular(30),
-            )),
+                  borderSide: BorderSide.none, //去除底线
+                  borderRadius: BorderRadius.circular(30),
+                )),
           ),
           height: ScreenUtils.height(72),
           padding: EdgeInsets.only(left: 10, bottom: ScreenUtils.height(5)),
@@ -93,7 +94,6 @@ class SearchPage extends StatelessWidget {
                   title: Text("历史"),
                 ),
                 Divider(),
-
               ],
             ),
             SizedBox(

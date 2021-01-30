@@ -15,7 +15,7 @@ class CategrPages extends StatefulWidget {
   }
 }
 
-class CategrPagesState extends State with AutomaticKeepAliveClientMixin{
+class CategrPagesState extends State<CategrPages> with AutomaticKeepAliveClientMixin{
   @override
   void initState() {
     // TODO: implement initState
@@ -166,6 +166,13 @@ class CategrPagesState extends State with AutomaticKeepAliveClientMixin{
   int selectedItem = 0;
   int nextSelected = 0;
 
+  /**
+   * 数据请求框架的抽取有
+   *
+   *
+   *
+   *
+   */
   @override
   Widget build(BuildContext context) {
     ScreenUtils.init(context);

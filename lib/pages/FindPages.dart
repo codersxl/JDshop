@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jdshop/provider/Counter.dart';
+import 'package:provider/provider.dart';
 
 /// 主框架 Tabs的切换
 
@@ -11,11 +13,19 @@ class FindPages extends StatefulWidget {
   }
 }
 
-class FindPagesState extends State {
-
-
+class FindPagesState extends State<FindPages> {
   @override
   Widget build(BuildContext context) {
-    return Text("find");
+    print("刷新了");
+    var pro = Provider.of<Counter>(context);
+
+    return Scaffold(
+      floatingActionButton: FlatButton(
+          onPressed: () {
+            pro.add();
+          },
+          child: Icon(Icons.add)),
+      body: Text("${pro.count}"),
+    );
   }
 }

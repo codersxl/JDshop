@@ -19,7 +19,7 @@ class HomePages extends StatefulWidget {
   }
 }
 
-class HomePagesState extends State with AutomaticKeepAliveClientMixin {
+class HomePagesState extends State<HomePages> with AutomaticKeepAliveClientMixin {
   List _focusData = [];
   List _hotlist = [];
   List _bestProductList = [];

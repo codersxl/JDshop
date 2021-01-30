@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jdshop/pages/FindPages.dart';
 import 'package:jdshop/pages/HomePages.dart';
 import 'package:jdshop/pages/CategrPages.dart';
 import 'package:jdshop/pages/ShopCarPages.dart';
@@ -16,7 +17,7 @@ class MainTabs extends StatefulWidget {
   }
 }
 
-class MainTabsState extends State {
+class MainTabsState extends State<MainTabs> {
   var _pageController;
 
   //设置当前的index
@@ -25,13 +26,13 @@ class MainTabsState extends State {
   List<Widget> listpages = [
     HomePages(),
     CategrPages(),
+    FindPages(),
     ShopCarPages(),
     MePages()
   ];
 
   @override
   void initState() {
-    // TODO: implement initState
     _pageController = new PageController(initialPage: CurrntIndex);
     super.initState();
   }
@@ -95,6 +96,7 @@ class MainTabsState extends State {
           BottomNavigationBarItem(title: Text("首页"), icon: Icon(Icons.home)),
           BottomNavigationBarItem(
               title: Text("分类"), icon: Icon(Icons.category)),
+          BottomNavigationBarItem(title: Text("发现"), icon: Icon(Icons.person)),
           BottomNavigationBarItem(
               title: Text("购物车"), icon: Icon(Icons.shopping_cart)),
           BottomNavigationBarItem(title: Text("我的"), icon: Icon(Icons.person))

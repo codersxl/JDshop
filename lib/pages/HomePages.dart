@@ -81,7 +81,6 @@ class HomePagesState extends State<HomePages> with AutomaticKeepAliveClientMixin
             sPic = Config.domain + sPic.replaceAll('\\', '/');
             return Column(
               children: <Widget>[
-                //图片
                 Container(
                   height: ScreenUtils.height(140),
                   width: ScreenUtils.width(140),
